@@ -1,0 +1,8 @@
+{
+  "rewrites": [
+    {
+      "source": "/api/resend/(.*)",
+      "destination": "https://api.resend.com/$1"
+    }
+  ]
+}
