@@ -299,10 +299,10 @@ export async function sendDistributorEmail(data: DistributorIntakeData): Promise
         <div style="background-color: #f8fafc; padding: 20px; border-radius: 8px; margin: 20px 0;">
           <h3 style="color: #374151; margin-top: 0;">Company Details:</h3>
           <p><strong>Company:</strong> ${data.company || 'Not provided'}</p>
-          <p><strong>Contact Person:</strong> ${data.contact || 'Not provided'}</p>
+          <p><strong>Contact Person:</strong> ${data.firstName || ''} ${data.lastName || ''}</p>
           <p><strong>Email:</strong> ${data.email || 'Not provided'}</p>
           <p><strong>Phone:</strong> ${data.phone || 'Not provided'}</p>
-          <p><strong>Product:</strong> ${data.productName || 'Not provided'}</p>
+          <p><strong>Role:</strong> ${data.role || 'Not provided'}</p>
         </div>
         
         <div style="background-color: #ecfdf5; padding: 15px; border-radius: 8px; border-left: 4px solid #10b981;">
@@ -384,20 +384,13 @@ export function validateDistributorData(data: Partial<DistributorIntakeData>): {
   if (!data.company?.trim()) errors.push('Company name is required');
   if (!data.firstName?.trim() || !data.lastName?.trim()) errors.push('Contact person name is required');
   if (!data.email?.trim()) errors.push('Email is required');
-  if (!data.productName?.trim()) errors.push('Product name is required');
-  if (!data.signature?.trim()) errors.push('Signature is required');
+  if (!data.role?.trim()) errors.push('Role is required');
+  if (!data.country?.trim()) errors.push('Country is required');
   
   // Email format validation
   if (data.email && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(data.email)) {
     errors.push('Please enter a valid email address');
   }
-  
-  // Array fields validation
-  if (!data.businessType?.length) errors.push('At least one business type must be selected');
-  if (!data.productCategory?.length) errors.push('At least one product category must be selected');
-  if (!data.targetMarket?.length) errors.push('At least one target market must be selected');
-  if (!data.models?.length) errors.push('At least one pricing model must be selected');
-  if (!data.tiers?.length) errors.push('At least one store tier must be selected');
   
   return {
     isValid: errors.length === 0,
